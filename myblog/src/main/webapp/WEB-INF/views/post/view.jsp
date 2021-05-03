@@ -30,7 +30,7 @@
 				</div>
 				<!-- /.blog-post -->
 				<hr>
-				<p>첨부파일 [<a href="resources/upload/${vo.attach_file}" download>${vo.attach_file}</a>]</p>
+				<p>첨부파일 [<a href="${pageContext.request.contextPath }/upload/${vo.attach_file}" download>${vo.attach_file}</a>]</p>
 				<hr>
 				<div class="blog-post">
 					<c:if test="${authUser.id eq id}">
