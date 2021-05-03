@@ -1,18 +1,12 @@
 package com.bit.myblog.vo;
 
-import javax.validation.constraints.NotEmpty;
-
 public class PostVo {
 	private Long no;
-	
-	@NotEmpty
 	private String title;
 	private String author;
-	
-	@NotEmpty
 	private String content;
-	
-	private String attach_file;
+	private String origin_file;
+	private String stored_file;
 	private String w_date;
 	private String blog_id;
 	
@@ -69,12 +63,20 @@ public class PostVo {
 		this.content = content;
 	}
 
-	public String getAttach_file() {
-		return attach_file;
+	public String getOrigin_file() {
+		return origin_file;
 	}
 
-	public void setAttach_file(String attach_file) {
-		this.attach_file = attach_file;
+	public void setOrigin_file(String origin_file) {
+		this.origin_file = origin_file;
+	}
+
+	public String getStored_file() {
+		return stored_file;
+	}
+
+	public void setStored_file(String stored_file) {
+		this.stored_file = stored_file;
 	}
 
 	public String getW_date() {
@@ -96,11 +98,9 @@ public class PostVo {
 	@Override
 	public String toString() {
 		return "PostVo [no=" + no + ", title=" + title + ", author=" + author + ", content=" + content
-				+ ", attach_file=" + attach_file + ", w_date=" + w_date + ", blog_id=" + blog_id + ", keyword="
-				+ keyword + ", curPage=" + curPage + "]";
+				+ ", origin_file=" + origin_file + ", stored_file=" + stored_file + ", w_date=" + w_date + ", blog_id="
+				+ blog_id + ", keyword=" + keyword + ", curPage=" + curPage + "]";
 	}
 
-	
-
-	
+		
 }

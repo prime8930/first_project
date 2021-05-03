@@ -37,10 +37,12 @@
 							</div>
 							<br/>
 							<div class="form-group">
-								<input class="form-control input-lg" name="file" type="file" value="${postVo.attach_file }">
+								<input class="form-control input-lg" name="file" type="file">
+								<input class="form-control input-lg" name="filename" type="text" value="기존 파일명 [${postVo.origin_file }]" readonly="readonly">
 							</div>
 							<br/>
 							<input id="btn-submit" class="btn btn-lg btn-primary btn-block" value="수정하기" type="submit">
+							<a class="btn btn-lg btn-primary btn-block" href="${pageContext.request.contextPath }/${id }/post/view/${no }" style="float:right;">뒤로가기</a>
 						</fieldset>
 					</form>
 				</div>

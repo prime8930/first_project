@@ -1,5 +1,7 @@
 package com.bit.myblog.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,23 +74,17 @@ public class BlogController {
 	@RequestMapping(value="/post/add", method=RequestMethod.POST)
 	public String add(PostVo vo, @RequestParam("file") MultipartFile file) {
 		if(file.getOriginalFilename().equals("")) {
-			vo.setAttach_file(null);
+			vo.setOrigin_file(null);
 		} else {
-			String path = fileUploadService.uploadFile(file, uploadPath);
-			vo.setAttach_file(path);
+			List<String> list = fileUploadService.uploadFile(file, uploadPath);
+			vo.setOrigin_file(list.get(0));
+			vo.setStored_file(list.get(1));
 		}
 		postService.insert(vo);
 		return "redirect:/" + vo.getBlog_id();
 	}
 	
-	@Auth
-	@RequestMapping(value="/post/delete/{no}")
-	public String delete(@RequestParam("result") String result, @PathVariable("no") Long no, @PathVariable("id") String id) {
-		if(result.equals("true")) {
-			postService.delete(no);
-		}
-		return "redirect:/" + id;
-	}
+	
 	
 	@Auth
 	@RequestMapping(value="/update", method=RequestMethod.GET)
@@ -117,13 +113,13 @@ public class BlogController {
 	
 	@Auth
 	@RequestMapping("/delete")
-	public String delete(@PathVariable("id") String id, @RequestParam("result") String result) {
+	public String blogDelete(@PathVariable("id") String id, @RequestParam("result") String result) {
 		if(result.equals("true")) {
 			BlogVo blogVo = blogService.findMyBlog(id);
 			fileUploadService.blogDelete(blogVo, uploadPath);
 			blogService.delete(id);
 		}
-		return "blog/join";
+		return "redirect:/{id}";
 	}
 	
 	

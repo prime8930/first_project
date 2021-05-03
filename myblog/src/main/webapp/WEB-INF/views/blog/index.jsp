@@ -54,7 +54,7 @@
 		function postDel(no) {
 		    var chk = confirm("정말 삭제하시겠습니까?");
 		    if (chk) {
-		        location.href='post/${id}/delete/' + no + '?result=true';
+		        location.href='$}/${id}/delete/' + no + '?result=true';
 		    }
 		}
 		

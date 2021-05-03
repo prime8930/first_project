@@ -29,12 +29,19 @@
 					<p>${fn:replace(vo.content, newLineChar, "<br/>")}</p>
 				</div>
 				<!-- /.blog-post -->
-				<hr>
-				<p>첨부파일 [<a href="${pageContext.request.contextPath }/upload/${vo.attach_file}" download>${vo.attach_file}</a>]</p>
+				<c:if test="${vo.origin_file != null}">
+					<hr>
+					<div class="like p-2 cursor action-collapse" data-toggle="collapse" href="#attach" role="button" aria-expanded="false" aria-controls="attach">
+						첨부파일<span class="fas fa-caret-down" aria-hidden="true"></span> 
+					</div>
+					<div class="bg-light p-2 collapse" id="attach">
+						[<a href="${pageContext.request.contextPath }/upload/${vo.stored_file}" download>${vo.origin_file}</a>]
+					</div>
+				</c:if>
 				<hr>
 				<div class="blog-post">
 					<c:if test="${authUser.id eq id}">
-						<a class="btn btn-danger" href="${pageContext.request.contextPath }/${id}/post" role="button" style="float: left;">삭제</a>
+						<button class="btn btn-danger" onclick="postDel(${no})" style="float: left;">삭제</button>
 						<a class="btn btn-primary" href="${pageContext.request.contextPath }/${id}/post/view/${no}/update" role="button" style="float: right; margin-left: 5px; margin-right: 5px;">수정</a>
 					</c:if>
 					<a class="btn btn-primary" href="${pageContext.request.contextPath }/${id}/post" role="button" style="float: right; margin-left: 5px;">목록</a>
@@ -172,6 +179,13 @@
 	<script src="${pageContext.request.contextPath }/assets/js/jquery/jquery-3.6.0.js"></script>
 	<script src="${pageContext.request.contextPath }/assets/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
+		function postDel(no) {
+		    var chk = confirm("정말 삭제하시겠습니까?");
+		    if (chk) {
+		        location.href= no +'/delete/?result=true';
+		    }
+		}
+	
 		function delComment(no) {
 		    var chk = confirm("정말 삭제하시겠습니까?");
 		    if (chk) {

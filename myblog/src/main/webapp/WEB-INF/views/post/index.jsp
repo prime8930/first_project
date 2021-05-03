@@ -96,7 +96,7 @@
 		function blogDel() {
 		    var chk = confirm("정말 삭제하시겠습니까?");
 		    if (chk) {
-		        location.href='${authUser.id}/delete?result=true';
+		        location.href='delete?result=true';
 		    }
 		}
 	</script>

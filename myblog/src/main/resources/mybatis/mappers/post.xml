@@ -15,7 +15,7 @@
 	
 	<select id="findByNo" parameterType="Long" resultType="postvo">
 		<![CDATA[
-			select title, author, content, attach_file, w_date
+			select title, author, content, origin_file, stored_file, w_date
 			from post
 			where no = #{no }
 		]]>
@@ -59,7 +59,7 @@
 		<![CDATA[
 			insert 
 			into post
-			values(null, #{title }, #{author }, #{content }, #{attach_file }, now(), #{blog_id })
+			values(null, #{title }, #{author }, #{content }, #{origin_file }, #{stored_file }, now(), #{blog_id })
 		]]>
 	</insert>
 	
@@ -74,11 +74,12 @@
 	<update id="update" parameterType="postvo">
 
 		<choose>
-			<when test='attach_file != ""'>
+			<when test='origin_file != ""'>
 				<![CDATA[
 					update post
 				 	set title = #{title},
-				 	attach_file = #{attach_file},
+				 	origin_file = #{origin_file},
+				 	stored_file = #{stored_file},
 				 	content = #{content}
 				 	where no = #{no}
 				]]>

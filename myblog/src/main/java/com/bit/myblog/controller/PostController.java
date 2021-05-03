@@ -94,15 +94,29 @@ public class PostController {
 	@RequestMapping(value="/view/{no}/update", method=RequestMethod.POST)
 	public String update(PostVo vo, @PathVariable("no") Long no, @RequestParam("file") MultipartFile file) {
 		if(file.getOriginalFilename().equals("")) {
-			vo.setAttach_file("");
+			vo.setOrigin_file("");
+			vo.setStored_file("");
 		} else {
+			vo = postService.findByNo(no);
 			fileUploadService.postDelete(vo, uploadPath);
-			String path = fileUploadService.uploadFile(file, uploadPath);
-			vo.setAttach_file(path);
+			List<String> list = fileUploadService.uploadFile(file, uploadPath);
+			vo.setOrigin_file(list.get(0));
+			vo.setStored_file(list.get(1));
 		}
 		vo.setNo(no);
 		postService.update(vo);
 		return "redirect:/{id}/post/view/{no}";
+	}
+	
+	@Auth
+	@RequestMapping(value="/view/{no}/delete")
+	public String delete(@RequestParam("result") String result, @PathVariable("no") Long no, @PathVariable("id") String id) {
+		if(result.equals("true")) {
+			PostVo postVo = postService.findByNo(no);
+			fileUploadService.postDelete(postVo, uploadPath);
+			postService.delete(no);
+		}
+		return "redirect:/" + id;
 	}
 	
 	
