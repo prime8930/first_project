@@ -2,8 +2,12 @@ package com.bit.myblog.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
+
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,15 +19,14 @@ import net.coobird.thumbnailator.Thumbnails;
 @Service
 public class FileUploadService {
 	
-	private static final int THUMB_WIDTH = 300;
-	private static final int THUMB_HEIGHT = 169;
+	private static final int THUMB_WIDTH = 250;
+	private static final int THUMB_HEIGHT = 150;
 
 	public String uploadLogo(MultipartFile file, String uploadPath) {
 		
 		UUID uid = UUID.randomUUID();
 		
 		String fileName = file.getOriginalFilename();
-		fileName = fileName.substring(fileName.lastIndexOf("\\") + 1);
 		
 		String saveOriginName = uid + "_" + fileName;
 		
@@ -38,12 +41,11 @@ public class FileUploadService {
 			file.transferTo(origin);
 			
 			File thumbNail = new File(thumbPath);
-			
+			file.transferTo(thumbNail);
 			if(origin.exists()) {
-//				image.getParentFile().mkdirs();
 				Thumbnails.of(origin).size(THUMB_WIDTH, THUMB_HEIGHT).toFile(thumbNail);
 			}
-			file.transferTo(thumbNail);
+			
 		} catch (IllegalStateException e) {
 			System.out.println("IllegalStateException : " +e.getMessage());
 		} catch (IOException e) {
@@ -64,15 +66,18 @@ public class FileUploadService {
 		return origin.delete() && thumbNail.delete();
 	}
 
-	public String uploadFile(MultipartFile file, String uploadPath) {
+	public List<String> uploadFile(MultipartFile file, String uploadPath) {
+		
+		List<String> list = new ArrayList<>();
 		UUID uid = UUID.randomUUID();
 		
-		String fileName = file.getOriginalFilename();
-		fileName = fileName.substring(fileName.lastIndexOf("\\") + 1);
+		String ext = FilenameUtils.getExtension(file.getOriginalFilename());
 		
-		String saveName = uid + "_" + fileName;
+		String originName = file.getOriginalFilename();
+		String storedName = uid + "." + ext;
 		
-		String savePath = uploadPath + "\\" + saveName;
+		String savePath = uploadPath + "\\" + storedName;
+		
 		
 		try {
 			File saveFile = new File(savePath);
@@ -83,11 +88,14 @@ public class FileUploadService {
 			System.out.println("IOException : " + e.getMessage());
 		}
 		
-		return saveName;
+		list.add(originName);
+		list.add(storedName);
+		
+		return list;
 	}
 
 	public boolean postDelete(PostVo postVo, String uploadPath) {
-		String path = uploadPath + "\\" + postVo.getAttach_file();
+		String path = uploadPath + "\\" + postVo.getStored_file();
 		
 		File file = new File(path);
 		return file.delete();
