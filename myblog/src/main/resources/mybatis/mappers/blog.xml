@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="blog">
+
+	<insert id="insert" parameterType="blogvo">
+		<![CDATA[
+			insert
+			into blog
+			values(null, #{user_id }, #{title }, #{o_logo }, #{t_logo }, #{intro }, now())
+		]]>
+	</insert>
+
+	<select id="findById" parameterType="string" resultType="blogvo">
+		<![CDATA[
+			select no, title, o_logo, t_logo, intro
+			from blog
+			where user_id = #{user_id }
+		]]>
+	</select>
+	
+	<select id="findAllBlog" parameterType="Integer" resultType="blogvo">
+		<![CDATA[
+			select no, user_id, title, t_logo, intro
+			from blog
+			order by no asc limit #{curPageNum}, 3
+		]]>
+	</select>
+	
+	<select id="findByKeyword" parameterType="blogvo" resultType="blogvo">
+		<![CDATA[
+			select no, user_id, title, t_logo, intro
+			from blog
+			where title like CONCAT('%',#{keyword},'%')
+			order by no asc limit #{curPage}, 3
+		]]>
+	</select>
+	
+	<select id="getCount" resultType="Integer">
+		<![CDATA[
+			select count(no)
+			from blog
+		]]>
+	</select>
+	
+	<update id="update" parameterType="blogvo">
+		<choose>
+			<when test='o_logo != ""'>
+				<![CDATA[
+					update blog
+				 	set title = #{title}, 
+					 	o_logo = #{o_logo}, 
+					 	t_logo = #{t_logo}, 
+					 	intro = #{intro}
+				 	where no = #{no}
+				]]>
+			</when>
+			<otherwise>
+				<![CDATA[
+					update blog
+				 	set title = #{title},
+					 	intro = #{intro}
+				 	where no = #{no}
+				]]>
+			</otherwise>
+		</choose>
+	</update>
+	
+	<delete id="delete" parameterType="String">
+		<![CDATA[
+			delete
+			from blog
+			where user_id = #{user_id}
+		]]>
+	</delete>
+
+</mapper>

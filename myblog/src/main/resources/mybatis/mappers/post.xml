@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="post">
+
+	<select id="findAllPost" parameterType="blogvo" resultType="postvo">
+		<![CDATA[
+			select no, title, author, content, w_date, blog_id
+			from post
+			where blog_id = #{user_id}
+			order by no asc limit #{curPage}, 5
+			
+		]]>
+	</select>
+	
+	<select id="findByNo" parameterType="Long" resultType="postvo">
+		<![CDATA[
+			select title, author, content, attach_file, w_date
+			from post
+			where no = #{no }
+		]]>
+	</select>
+	
+	<select id="findById" parameterType="string" resultType="postvo">
+		<![CDATA[
+			select no, title, author, content, w_date
+			from post
+			where blog_id = #{blog_id }
+		]]>
+	</select>
+	
+	<select id="findByKeyword" parameterType="postvo" resultType="postvo">
+		<![CDATA[
+			select no, title, author, content, w_date, blog_id
+			from post
+			where blog_id = #{blog_id } and title like CONCAT('%',#{keyword},'%')
+			order by no asc limit #{curPage}, 5
+		]]>
+	</select>
+	
+	<select id="getCount" parameterType="string" resultType="Integer">
+		<![CDATA[
+			select count(no)
+			from post
+			where blog_id = #{blog_id }
+		]]>
+	</select>
+	
+	<select id="findCountByKeyword" parameterType="postvo" resultType="Integer">
+		<![CDATA[
+			select count(no)
+			from post
+			where title like CONCAT('%',#{keyword},'%')
+		]]>
+	</select>
+	
+	<insert id="insert" parameterType="string">
+		<![CDATA[
+			insert 
+			into post
+			values(null, #{title }, #{author }, #{content }, #{attach_file }, now(), #{blog_id })
+		]]>
+	</insert>
+	
+	<delete id="delete" parameterType="Long">
+		<![CDATA[
+			delete
+			from post
+			where no = #{no }
+		]]>
+	</delete>
+	
+	<update id="update" parameterType="postvo">
+
+		<choose>
+			<when test='attach_file != ""'>
+				<![CDATA[
+					update post
+				 	set title = #{title},
+				 	attach_file = #{attach_file},
+				 	content = #{content}
+				 	where no = #{no}
+				]]>
+			</when>
+			<otherwise>
+				<![CDATA[
+					update post
+				 	set title = #{title},
+					 	content = #{content}
+				 	where no = #{no}
+				]]>
+			</otherwise>
+		</choose>
+	</update>
+
+</mapper>
