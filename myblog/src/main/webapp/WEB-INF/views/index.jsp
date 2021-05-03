@@ -15,8 +15,8 @@
 	<!-- Main jumbotron for a primary marketing message or call to action -->
 	<div class="jumbotron">
 		<div class="container">
-			<h1>아 배고파</h1>
-			<p>졸립기도 하고 배고프기도 하고</p>
+			<h1>My Blog 사이트에 오신 걸 환영합니다.</h1>
+			<p>여러 사용자들의 블로그를 구경하고, 추억이 담긴 포스트를 올려보세요.</p>
 			<hr style="margin-bottom: 40px;">
 		</div>
 	</div>

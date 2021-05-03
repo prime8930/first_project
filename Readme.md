@@ -2,7 +2,7 @@
 
   - 주제 : 통합 블로그 사이트
 
-    ![image-20210503120511220](C:\Users\oja96\AppData\Roaming\Typora\typora-user-images\image-20210503120511220.png)
+    ![index](https://user-images.githubusercontent.com/63778503/116838191-7a822f00-ac08-11eb-85e5-d1d3873342a0.PNG)
 
 
 
