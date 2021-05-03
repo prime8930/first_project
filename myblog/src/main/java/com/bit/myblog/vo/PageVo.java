@@ -30,6 +30,9 @@ public class PageVo {
 		setNextPage(endNum + 1);
 	}
 	
+	public PageVo() {
+	}
+
 	public int getCurPage() {
 		return curPage;
 	}

@@ -55,10 +55,8 @@ public class PostService {
 		return postRepository.findByKeyword(postVo);
 	}
 
-	public int findCountByKeyword(String id, String keyword, int curPage) {
+	public int findCountByKeyword(String id, String keyword) {
 		PostVo postVo = new PostVo();
-		postVo.setBlog_id(id);
-		postVo.setCurPage((curPage-1) *5);
 		postVo.setKeyword(keyword);
 		return postRepository.findCountByKeyword(postVo);
 	}

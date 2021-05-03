@@ -51,6 +51,7 @@
 			select count(no)
 			from post
 			where title like CONCAT('%',#{keyword},'%')
+			and blog_id = #{blog_id }
 		]]>
 	</select>
 	

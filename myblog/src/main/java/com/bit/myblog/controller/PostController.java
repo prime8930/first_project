@@ -145,9 +145,11 @@ public class PostController {
 	
 	@RequestMapping("/search")
 	public String postSearch(@PathVariable("id") String id, @RequestParam(value="keyword", required=false) String keyword, Model model, @RequestParam(value="page", required=false) String pageNum) {
-		PageVo pageVo = new PageVo(pageNum, blogService.getCount(), 5);
+		
+		int searchCount = postService.findCountByKeyword(id, keyword);
+		PageVo pageVo = new PageVo(pageNum, searchCount, 5);
 		List<PostVo> postVo = postService.findByKeyword(id, keyword, pageVo.getCurPage());
-		int searchCount = postService.findCountByKeyword(id, keyword, pageVo.getCurPage());
+		
 		
 		if(pageVo.pageOverAndUnder(pageVo.getCurPage())) {
 			return "redirect:/";

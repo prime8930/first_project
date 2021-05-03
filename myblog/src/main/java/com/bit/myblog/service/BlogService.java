@@ -39,15 +39,15 @@ public class BlogService {
 		return blogRepository.delete(id);
 	}
 
-
-	public List<BlogVo> findByKeyword(BlogVo vo) {
-		return blogRepository.findByKeyword(vo);
+	public int findCountByKeyword(String keyword) {
+		BlogVo blogVo = new BlogVo();
+		blogVo.setKeyword(keyword);
+		return blogRepository.findCountByKeyword(blogVo);
 	}
 
 	public List<BlogVo> findByKeyword(String keyword, int curPage) {
-		
 		BlogVo blogVo = new BlogVo();
-		blogVo.setCurPage((curPage-1) * 3);
+		blogVo.setCurPage((curPage-1)*3);
 		blogVo.setKeyword(keyword);
 		return blogRepository.findByKeyword(blogVo);
 	}

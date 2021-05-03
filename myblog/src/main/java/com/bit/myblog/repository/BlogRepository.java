@@ -42,6 +42,10 @@ public class BlogRepository {
 		return sqlSession.selectList("blog.findByKeyword", vo);
 	}
 
+	public int findCountByKeyword(BlogVo vo) {
+		return sqlSession.selectOne("blog.findCountByKeyword", vo);
+	}
+
 	
 
 }

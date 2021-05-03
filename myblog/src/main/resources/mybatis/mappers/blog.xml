@@ -36,6 +36,14 @@
 		]]>
 	</select>
 	
+	<select id="findCountByKeyword" parameterType="blogvo" resultType="Integer">
+		<![CDATA[
+			select count(no)
+			from blog
+			where title like CONCAT('%',#{keyword},'%')
+		]]>
+	</select>
+	
 	<select id="getCount" resultType="Integer">
 		<![CDATA[
 			select count(no)

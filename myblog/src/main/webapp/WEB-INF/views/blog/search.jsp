@@ -13,15 +13,15 @@
 	<c:import url="/WEB-INF/views/includes/navbar.jsp" />
 
 	<!-- Main jumbotron for a primary marketing message or call to action -->
-	<div class="jumbotron">
-		<div class="container">
-			<h1>아 배고파</h1>
-			<p>졸립기도 하고 배고프기도 하고</p>
-			<hr style="margin-bottom: 40px;">
-		</div>
-	</div>
-
+	
 	<div class="container">
+		<div class="jumbotron p-3 p-md-5 text-white rounded bg-dark">
+			<div class="col-md-6 px-0">
+				<h1 class="display-4 font-italic">블로그 검색 결과</h1>
+				<p class="lead my-3">총 ${searchCount }건</p>
+			</div>
+		</div>
+		<br><br>
 		<div class="row" >
 			<c:forEach items="${blogVo }" var="vo" varStatus="status">
 			<div class="col-xs-4 col-md-4" style="text-align: center">

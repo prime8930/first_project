@@ -26,7 +26,7 @@
 			<c:forEach items="${blogVo }" var="vo" varStatus="status">
 			<div class="col-xs-4 col-md-4" style="text-align: center">
 				<div class="thumbnail">
-					<img src="${pageContext.request.contextPath }/upload/${vo.t_logo }" >
+					<img src="${pageContext.request.contextPath }/upload/${vo.t_logo }">
 					<div class="caption" style="margin-top: 20px;">
 						<hr style="margin: auto;" width="300px">
 						<h2>${vo.title }</h2>
